@@ -24,7 +24,7 @@ class graph{
                         let target = r.get('target');
                         target.id = target.id.toNumber();
                         this.nodes[target.id] = target;
-                        let rel = r.get('relationships');
+                        let rel = r.get('relationship');
                         return Object.assign({source: source.id, target: target.id}, rel);
                     });
                     const gData = {nodes: Object.values(this.nodes), links: links};
@@ -48,7 +48,7 @@ class graph{
                             obj.add(sprite);
                             return obj;
                         })
-                        .nodeLabel(node => `Package: ${node.package}<br>Version: ${node.version}`)
+                        .nodeLabel(node => `Package: ${node.vendor}\\${node.name}<br>Version: ${node.version}`)
                         .onNodeClick(function (node) {
                             this.nodeClicked(node);
                         }.bind(this))
@@ -83,7 +83,7 @@ class graph{
         this.driver.close();
     }
     createPath(vendor, packageName) {
-        let pathnodes = {}
+        let pathnodes = {};
         $('#' + this.element).html('');
         const elem = document.getElementById(this.element);
         this.driver.preparePackagePath(vendor, packageName);
@@ -99,7 +99,7 @@ class graph{
                         let target = r.get('target');
                         target.id = target.id.toNumber();
                         pathnodes[target.id] = target;
-                        let rel = r.get('relationships');
+                        let rel = r.get('relationship');
                         return Object.assign({source: source.id, target: target.id}, rel);
                     });
                     const gData = {nodes: Object.values(pathnodes), links: links};
@@ -121,7 +121,7 @@ class graph{
                             obj.add(sprite);
                             return obj;
                         })
-                        .nodeLabel(node => `Package: ${node.package}<br>Version: ${node.version}`)
+                        .nodeLabel(node => `Package: ${node.vendor}\\${node.name}<br>Version: ${node.version}`)
                         .onNodeClick(function (node) {
                             this.nodeClicked(node);
                         }.bind(this))
@@ -144,14 +144,16 @@ class graph{
             nodeOrdered.push({id: key, node: value});
         });
         nodeOrdered.sort(function(nodeA, nodeB){
-            if(nodeA.node.package > nodeB.node.package){
+            let packageA = nodeA.node.vendor + '\\' + nodeA.node.name;
+            let packageB = nodeB.node.vendor + '\\' + nodeB.node.name;
+            if(packageA > packageB){
                 return 1;
             }
             return -1;
         });
 
         $.each(nodeOrdered, function(index, value){
-            $("#package-list").append("<option value='" + value.id + "'>" + value.node.package + "</option>");
+            $("#package-list").append("<option value='" + value.id + "'>" + value.node.vendor + '\\' + value.node.name + "</option>");
         });
     }
     nodeClicked(node){
@@ -169,7 +171,7 @@ class graph{
             return;
         }
 
-        $("#package").text(this.nodes[id].package);
+        $("#package").text(this.nodes[id].vendor + '\\' + this.nodes[id].name);
         $("#vendor").text(this.nodes[id].vendor);
         $("#url").html('<a href="' + this.nodes[id].url + '">' + this.nodes[id].url + '</a>');
         $("#version").text(this.nodes[id].version);
