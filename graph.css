@@ -12,6 +12,7 @@ aside {
     width: 75vw;
     height: 85vh;
     display: inline-block;
+    background-color: black;
 }
 select {
     width: 18vw;
