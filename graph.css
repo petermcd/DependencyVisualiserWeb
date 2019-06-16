@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+}
+aside {
+    float: left;
+    width: 20vw ;
+    height: 85vh;
+    overflow: auto;
+    padding-left: 10px;
+}
+#graph {
+    width: 75vw;
+    height: 85vh;
+    display: inline-block;
+}
+select {
+    width: 18vw;
+}
