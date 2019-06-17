@@ -1,0 +1,25 @@
+{
+  "name": "dependencyvisualiserweb",
+  "version": "1.0.0",
+  "description": "This ia very early stage demo of an output driver for\r my [Dependency Visualiser](https://github.com/petermcd/Dependency-Visualiser)\r project. This currently utilises a driver for Neo4J and accompanies the\r [Neo4J storage driver](https://github.com/petermcd/DependencyVisualiserNeo4j).",
+  "main": "index.js",
+  "dependencies": {
+    "3d-force-graph": "^1.49.5",
+    "jquery": "^3.4.1",
+    "ngraph.forcelayout3d": "^1.0.0",
+    "ngraph.events": "^1.0.0",
+    "ngraph.merge": "^1.0.0",
+    "three-spritetext": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petermcd/DependencyVisualiserWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>Dependency Graph</title>
     <link rel="stylesheet" href="graph.css">
-
 </head>
 
 <body>
@@ -12,6 +11,7 @@
 <aside>
     <section id="packages">
         <h2>Select Package</h2>
+        <label for="package-list">Packages</label>
         <select name="packages" id="package-list">
             <option>Select</option>
         </select>
@@ -27,17 +27,12 @@
 <div id="graph"></div>
 
 <script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/neo4j-driver/lib/browser/neo4j-web.js"></script>
 <script src="//unpkg.com/three"></script>
 <script src="//unpkg.com/three-spritetext"></script>
 <script src="//unpkg.com/3d-force-graph"></script>
-<script src="js/neo4jDriver.js"></script>
 <script src="js/graph.js"></script>
 <script>
-    let neo = new neo4jDriver('localhost', 1111, 'neo4j', 'neo4j');
-    let node_graph = new graph(neo, 'graph');
-    node_graph.create();
-
+    new graph('REPLACE', 'graph');
 </script>
 </body>
 </html>

@@ -2,16 +2,16 @@
 
 This ia very early stage demo of an output driver for
 my [Dependency Visualiser](https://github.com/petermcd/Dependency-Visualiser)
-project. This currently utilises a driver for Neo4J and accompanies the
-[Neo4J storage driver](https://github.com/petermcd/DependencyVisualiserNeo4j).
+project. This implementation is not reliant on any specific
+storage mechanism and simply retrieves the data from an AJAX query.
 
 This project is far from finished and contains some known bugs.
 
-### What Next
+### TODO
 
-A decision has to be made whether this project should have drivers for
-different sources or simply use ajax and the main project driver is used.
-
-This mean that the same code base could be used for the web component
-regardless of database however it may increase server load and delays
-in outputting the graph. 
+* Currently not using locally installed packages. This is causing
+latency issues
+* look into using imports for including other javascript files to
+improve overhead
+* Investigate the use of websockets or server sent events to receive
+data, this will help with larger databases
