@@ -25,7 +25,7 @@ class graph{
         } else {
             let parameters = {};
             if(vendor.length > 0 && name.length > 0){
-                parameters = {vendor: vendor, name: name};
+                parameters = {vendor: vendor, package: name};
             }
             $.ajax({
                 url: this.url,
