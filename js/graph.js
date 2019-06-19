@@ -1,52 +1,44 @@
+"use strict";
 class graph{
     constructor(url, elementId){
-        this.initialised = false;
         this.url = url;
-        this.element = elementId;
-        this.nodes = [];
-        this.links = [];
+        this.elementId = elementId;
+        this.nodes = null;
+        this.links = null;
+        this.graph = null;
         $("#package-list").change(function () {
             this.packageChanged();
         }.bind(this));
-        this.getGraphData('', '');
+        this.createGraph();
     }
-    getGraphData(vendor, name){
-        let nodes = [];
-        let links = [];
-        if((vendor.length === 0 || name.length === 0) && this.nodes.length > 0){
-            nodes = this.nodes;
-            links = this.links;
-            if((vendor.length === 0 || name.length === 0) && this.nodes.length === 0){
-                this.nodes = nodes;
-                this.links = links;
-            }
-            const gData = {nodes: Object.values(nodes), links: links};
-            this.createGraph(gData);
+    createGraph(vendor = '', packageName = ''){
+        if (this.nodes != null && vendor.length === 0 && packageName.length === 0)
+        {
+            this.drawGraph({nodes: Object.values(this.nodes), links: this.links});
         } else {
             let parameters = {};
-            if(vendor.length > 0 && name.length > 0){
-                parameters = {vendor: vendor, package: name};
+            if(vendor.length > 0 && packageName.length > 0){
+                parameters = {vendor: vendor, package: packageName};
             }
             $.ajax({
                 url: this.url,
                 method: "GET",
                 data: parameters,
-                dataType: 'application/json',
+                context: this,
                 accepts: {
                     json: 'application/json'
                 }
             }).done(function(data){
-                const tData = this.prepareData(data);
-                const gData = {nodes: Object.values(tData.nodes), links: tData.links};
-                this.createGraph(gData);
-            }.bind(this)).fail(function () {
-                alert('request failed');
+                let graphData = this.prepareData(data);
+                this.drawGraph(graphData);
+            }.bind(this)).fail(function( jqXHR, textStatus, errorThrown ) {
+                alert(errorThrown);
             });
         }
     }
     prepareData(data){
-        let gData = JSON.parse(data);
-        const links = gData.map(r => {
+        let nodes = {};
+        const links = data.map(r => {
             let source = r.source;
             nodes[source.id] = source;
             let target = r.target;
@@ -54,17 +46,21 @@ class graph{
             let rel = r.relationship;
             return Object.assign({source: source.id, target: target.id}, rel);
         });
-        return {data: gData, links: links}
+        if(this.nodes === null){
+            this.nodes = nodes;
+            this.links = links;
+            this.populateNodeList();
+        }
+        return {nodes: Object.values(nodes), links: links};
     }
-    createGraph(data){
-        const elem = document.getElementById(this.element);
-        $('#' + this.element).html('');
-        const gData = data;
+    drawGraph(graphData){
+        const elem = document.getElementById(this.elementId);
+        $('#' + this.elementId).html('');
         this.graph = null;
         this.graph = ForceGraph3D()(elem)
             .width(document.getElementById('graph').offsetWidth)
             .height(document.getElementById('graph').offsetHeight)
-            .graphData(gData)
+            .graphData(graphData)
             .nodeAutoColorBy('type')
             .nodeVal('size')
             .nodeRelSize(3)
@@ -90,10 +86,6 @@ class graph{
             .linkDirectionalArrowRelPos(1)
             .linkAutoColorBy('type')
             .linkLabel(link => `Version: ${link.version}<br>Platform: ${link.for}`);
-        if (!this.initialised){
-            this.initialised = true;
-            this.populateNodeList();
-        }
     }
     populateNodeList(){
         let nodeOrdered = [];
@@ -121,7 +113,6 @@ class graph{
         this.packageChanged();
     }
     packageChanged(){
-        alert('triggered');
         let id = $("#package-list").val();
         let vendorText = '';
         let urlText = '';
@@ -139,22 +130,6 @@ class graph{
         $("#vendor").text(vendorText);
         $("#url").html(urlText);
         $("#version").text(versionText);
-        this.getGraphData(vendorText, nameText);
-    }
-    focusOnNode(){
-        let { nodes, } = this.graph.graphData();
-        this.graph.cameraPosition(
-            {
-                x: nodes[id].__threeObj.position.x,
-                y: nodes[id].__threeObj.position.y,
-                z: nodes[id].__threeObj.position.z - 200
-            },
-            {
-                x: nodes[id].__threeObj.position.x,
-                y: nodes[id].__threeObj.position.y,
-                z: nodes[id].__threeObj.position.z
-            },
-            10
-        );
+        this.createGraph(vendorText, nameText);
     }
 }
