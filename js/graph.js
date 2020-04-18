@@ -101,7 +101,10 @@ class graph{
             if(packageA > packageB){
                 return 1;
             }
-            return -1;
+            if (packageA < packageB){
+                return -1;
+            }
+            return 0;
         });
 
         $.each(nodeOrdered, function(index, value){
