@@ -6,8 +6,8 @@
   "dependencies": {
     "3d-force-graph": "^1.49.5",
     "jquery": "^3.6.0",
-    "ngraph.forcelayout3d": "^1.0.0",
-    "ngraph.events": "^1.0.0",
+    "ngraph.events": "^1.2.1",
+    "ngraph.forcelayout3d": "^1.2.0",
     "ngraph.merge": "^1.0.0",
     "three-spritetext": "^1.0.6"
   },
