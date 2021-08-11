@@ -56,7 +56,6 @@ class graph{
     drawGraph(graphData){
         const elem = document.getElementById(this.elementId);
         $('#' + this.elementId).html('');
-        this.graph = null;
         this.graph = ForceGraph3D()(elem)
             .width(document.getElementById('graph').offsetWidth)
             .height(document.getElementById('graph').offsetHeight)
