@@ -9,7 +9,7 @@
     "ngraph.events": "^1.2.1",
     "ngraph.forcelayout3d": "^1.2.0",
     "ngraph.merge": "^1.0.0",
-    "three-spritetext": "^1.6.4"
+    "three-spritetext": "^1.6.5"
   },
   "devDependencies": {},
   "scripts": {
