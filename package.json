@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "3d-force-graph": "^1.70.19",
-    "jquery": "^3.6.2",
+    "jquery": "^3.6.3",
     "ngraph.events": "^1.2.2",
     "ngraph.forcelayout3d": "^1.2.0",
     "ngraph.merge": "^1.0.0",
