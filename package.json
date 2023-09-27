@@ -4,7 +4,7 @@
   "description": "This ia very early stage demo of an output driver for\r my [Dependency Visualiser](https://github.com/petermcd/Dependency-Visualiser)\r project. This currently utilises a driver for Neo4J and accompanies the\r [Neo4J storage driver](https://github.com/petermcd/DependencyVisualiserNeo4j).",
   "main": "index.js",
   "dependencies": {
-    "3d-force-graph": "^1.72.2",
+    "3d-force-graph": "^1.72.3",
     "jquery": "^3.7.1",
     "ngraph.events": "^1.2.2",
     "ngraph.forcelayout3d": "^1.2.0",
